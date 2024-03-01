@@ -1,306 +1,174 @@
-import { DateTime } from 'luxon';
+$(document).ready(heroScroll);
+$(document).ready(bookParallax);
+$(document).ready(posterParallax);
+$(document).ready(homeNavChange);
 
-$(document).ready(() => {
-  // ----- HERO Animation
-  ScrollTrigger.matchMedia({
-    // Have the animation only on desktop
-    '(min-width: 992px)': function () {
-      // Hero Section
-      $('.hero-intro').each(function () {
-        let heroIntro = $(this);
-        let heroWrap = $(this).find('.hero-intro_wrap');
-        let videoBox = $(this).find('.header01_visual-box');
-        let tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: $(this),
-            start: 'top top',
-            end: 'center top',
-            scrub: 0.2,
-            markers: true,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        // --- Set Section
-        let videoBoxHeight;
-        let videoBoxWidth;
-
-        function setSectionHeight() {
-          $(heroIntro).height(heroWrap.height() * 2);
-          videoBoxHeight = $('.header01_visual-split').height();
-          videoBoxWidth = $('.header01_visual-split').width();
-        }
-
-        function setVideoWidth() {
-          let paddingGlobal = gsap.getProperty('.padding-global', 'padding-left') * 2;
-          return videoBoxWidth + paddingGlobal;
-        }
-
-        function calculateVideoMove() {
-          let topHeight = $(heroIntro).find('.section').eq(0).outerHeight();
-          topHeight *= -1;
-          console.log(topHeight);
-          return topHeight - 4;
-        }
-
-        // Load
-        setSectionHeight();
-
-        // Resize
-        $(window).resize(() => {
-          if ($(window).width() >= 992) {
-            setSectionHeight();
-            $(videoBox).width(() => {
-              return setVideoWidth();
-            });
-            $(videoBox).css({
-              transform: `translate(${() => {
-                return calculateVideoMove();
-              }})`,
-            });
-          } else {
-            $(heroIntro, videoBox).attr('style', '');
-          }
-        });
-
-        // --- Create the Animation
-        tl.fromTo(
-          videoBox,
-          {
-            height: '101svh',
-            width: () => {
-              return '101svw';
-            },
-            y: () => {
-              return calculateVideoMove();
-            },
-          },
-          {
-            height: () => {
-              return videoBoxHeight;
-            },
-            width: () => {
-              return videoBoxWidth;
-            },
-            y: 0,
-          }
-        );
-        tl.fromTo(
-          '.nav',
-          {
-            color: 'rgba(255, 255, 255, 1)',
-            borderColor: 'rgba(234, 236, 240, 0)',
-            backgroundColor: 'rgba(255, 255, 255, 0)',
-          },
-          {
-            keyframes: {
-              '30%': {
-                color: 'rgba(51, 58, 71, 1)',
-              },
-              '50%': {
-                borderColor: 'rgba(234, 236, 240, 1)',
-                backgroundColor: 'rgba(255, 255, 255, 1)',
-              },
-            },
-          },
-          '<'
-        );
-        tl.to(
-          '.header01_content',
-          {
-            keyframes: {
-              '25%': { opacity: 1 },
-              '50%': { opacity: 0 },
-            },
-          },
-          '<'
-        );
-        tl.fromTo(
-          '[hero-intro-move]',
-          {
-            y: '5rem',
-          },
-          {
-            y: '0',
-          },
-          '<'
-        );
-
-        // Project the Time and Date
-        var currentDate = new Date();
-
-        // Date
-        var month = currentDate.toLocaleString('en', { month: 'long' });
-        var day = currentDate.getDate();
-        var year = currentDate.getFullYear();
-
-        // Time
-        var { DateTime } = luxon;
-        var userLocalTime = luxon.DateTime.local();
-        var convertedTime = userLocalTime.toUTC().toFormat('HHmm');
-
-        console.log(convertedTime);
-
-        $('[hero-date]').text(`${month} ${day}, ${year}`);
-        $('[hero-time]').text(`${convertedTime}[ZULU]`);
-
-        // Mouse Coordinates
-        $(document).mousemove(function (event) {
-          $('[mouseX]').text(event.clientX);
-          $('[mouseY]').text(event.clientY);
-        });
-      });
+// ________ Home Nav Transparent _____________________________
+function homeNavChange() {
+  let navTrigger = gsap.timeline({
+    scrollTrigger: {
+      trigger: 'body',
+      start: () => innerHeight / 2,
+      end: () => innerHeight / 2,
+      toggleActions: 'none play none reverse',
     },
   });
-  let main;
+  navTrigger.to(
+    '.nav_dropdown-list',
+    {
+      backgroundColor: 'white',
+      duration: 0.75,
+    },
+    '<'
+  );
+  navTrigger.to(
+    '.navbar',
+    {
+      backgroundColor: 'white',
+    },
+    '<'
+  );
+  navTrigger.to(
+    '.navbar_brand-star',
+    {
+      width: '25%',
+      duration: 0.75,
+      opacity: 0,
+      ease: 'power4.inOut',
+    },
+    '<'
+  ),
+    navTrigger.to(
+      '.s_logo-path',
+      {
+        y: '0%',
+        duration: 0.5,
+        ease: 'power4.inOut',
+        stagger: { amount: 0.04 },
+        delay: 0.2,
+      },
+      '<'
+    );
+}
 
-  // ---- CAPABILITIES
-  const navItems = document.querySelectorAll('.cap_navigation-item');
-  const anchors = $('.cap-anchor_box .cap-anchor')
-    .map(function () {
-      return '#' + $(this).attr('id');
-    })
-    .get();
-
-  const findCurrentAnchorIndex = () => {
-    for (let i = 0; i < navItems.length; i++) {
-      if (navItems[i].classList.contains('w--current')) {
-        return i;
-      }
-    }
-    return -1;
-  };
-
-  const scrollToAnchor = (id) => {
-    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleNavItemClick = (item, index, event) => {
-    if (mobile.matches) {
-      event.preventDefault();
-      event.stopPropagation();
-      navItems.forEach((item) => item.classList.remove('w--current'));
-      item.classList.add('w--current');
-      const slideIndex = index;
-      capSwiper.slideTo(slideIndex);
-    }
-  };
-
-  const mobile = window.matchMedia('(max-width: 991px)');
-  const desktop = window.matchMedia('(min-width: 992px)');
-  let capSwiper = null;
-
-  const swiperMode = () => {
-    const arrowPrev = $('.cap_slider-actions .slider-arrow');
-    arrowPrev.addClass('capabilities-arrow');
-
-    if (desktop.matches) {
-      if (capSwiper) {
-        capSwiper.destroy(true, true);
-        capSwiper = null;
-        $(navItems).removeClass('w--current');
-      }
-    } else if (mobile.matches) {
-      $(navItems).removeClass('w--current');
-      $(navItems).eq(0).addClass('w--current');
-      if (!capSwiper) {
-        capSwiper = new Swiper('.cap_content', {
-          slidesPerView: 1,
-          spaceBetween: 24,
-          speed: 250,
-          observer: true,
-          centeredSlides: true,
-          navigation: {
-            prevEl: '.slider-arrow.prev.capabilities-arrow',
-            nextEl: '.slider-arrow.next.capabilities-arrow',
-          },
-          on: {
-            slideChange: () => {
-              navItems.forEach((item, index) => {
-                if (index === capSwiper.activeIndex) {
-                  item.classList.add('w--current');
-                } else {
-                  item.classList.remove('w--current');
-                }
-              });
-            },
-          },
-        });
-      }
-    }
-  };
-
-  // Events
-  window.addEventListener('load', () => {
-    swiperMode();
+// ________ Home Hero Scroll _____________________________
+function heroScroll() {
+  let heroScroll = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.home_hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.75,
+    },
   });
+  heroScroll.to(
+    '.home_hero-inner',
+    {
+      y: '25vh',
+    },
+    '<'
+  );
+  heroScroll.to(
+    '.home_hero-slider',
+    {
+      y: '60svh',
+      /*x: "20svw",*/
+      rotation: -8,
+      scale: 0.6,
+      /*width: "60svw",
+      height: "75svh",*/
+    },
+    '<'
+  );
+}
 
-  window.addEventListener('resize', () => {
-    swiperMode();
+// __________ Book sliding up on homepage _____________
+function bookParallax() {
+  let bookParallax = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.home_book-inner',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.75,
+    },
   });
-
-  navItems.forEach((item, index) => {
-    item.addEventListener('click', (event) => {
-      handleNavItemClick(item, index, event);
-    });
-  });
-
-  // Desktop Arrows Click
-  $('.cap_slider-actions.desktop .slider-arrow.prev').click(() => {
-    const currentAnchorIndex = findCurrentAnchorIndex();
-    if (currentAnchorIndex > 0) {
-      scrollToAnchor(anchors[currentAnchorIndex - 1]);
-    } else {
-      scrollToAnchor(anchors[anchors.length - 1]);
+  bookParallax.fromTo(
+    '.home_book-cover',
+    {
+      yPercent: 100,
+      rotation: 20,
+    },
+    {
+      yPercent: -25,
+      rotation: -5,
     }
+  );
+}
+
+// __________ Netflix Poster sliding up on homepage _____________
+function posterParallax() {
+  let posterParallax = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.home_netflix-inner',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.75,
+    },
   });
-
-  $('.cap_slider-actions.desktop .slider-arrow.next').click(() => {
-    const currentAnchorIndex = findCurrentAnchorIndex();
-    if (currentAnchorIndex < anchors.length - 1) {
-      scrollToAnchor(anchors[currentAnchorIndex + 1]);
-    } else {
-      scrollToAnchor(anchors[0]);
+  posterParallax.fromTo(
+    '.netflix_poster',
+    {
+      yPercent: 20,
+      rotation: -10,
+    },
+    {
+      yPercent: -50,
+      rotation: 20,
     }
-  });
+  );
+}
 
-  let arrowLeft = $('.w-icon-slider-left');
-  let arrowRight = $('.w-icon-slider-right');
-  let customArrows = $('.about__investor-arrow');
+// _____________ Swiper Galleries _________________
 
-  customArrows.on('click', function (element) {
-    getDirection(element);
-  });
+//_______ Home Hero
+const swiperHomeHero = new Swiper('.swiper.is-home-hero', {
+  // Optional parameters
+  effect: 'slide',
+  loop: true,
+  parallax: true,
+  slidesPerView: 1,
+  autoplay: {
+    delay: 2000,
+  },
+  speed: 1000,
+});
 
-  function getDirection(element) {
-    customArrows.each(function () {
-      let directionID = $(this).attr('id');
+//_______ Home Press
+const swiperHomePress = new Swiper('.swiper.is-press', {
+  // Optional parameters
+  effect: 'fade',
+  fadeEffect: {
+    crossFade: true,
+  },
+  loop: true,
+  slidesPerView: 1,
+  autoplay: {
+    delay: 800,
+  },
+  speed: 10,
+});
 
-      if (directionID === 'link-left') {
-        if (arrowLeft.is(':hidden')) {
-          $(this).hide();
-        } else {
-          $(this).show();
-        }
-      }
-
-      if (directionID === 'link-right') {
-        if (arrowRight.is(':hidden')) {
-          $(this).hide();
-        } else {
-          $(this).show();
-        }
-      }
-    });
-
-    let clickedDirection = $(element).attr('id');
-    if (clickedDirection === 'link-left') {
-      arrowLeft.click();
-    }
-    if (clickedDirection === 'link-right') {
-      arrowRight.click();
-    }
-  }
-
-  getDirection();
+//_______ Home Trust Logos
+const swiperHomeTrust = new Swiper('.swiper.trust-home-logos', {
+  // Optional parameters
+  effect: 'fade',
+  fadeEffect: {
+    crossFade: true,
+  },
+  loop: true,
+  slidesPerView: 1,
+  autoplay: {
+    delay: 500,
+  },
+  speed: 10,
 });
