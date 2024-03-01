@@ -1,3 +1,5 @@
+import { initSwipers } from './utils/globalFunctions';
+
 // #region Menu
 
 let scrollPosition;
