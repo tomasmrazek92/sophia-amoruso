@@ -29,13 +29,14 @@ const swiperInstances = [
       on: {
         init: (swiper) => {
           let total = $(swiper.wrapperEl).closest('.container').find(`[data-slides="total"]`);
-          if (total.lenght) {
+          console.log(total.le);
+          if (total.length) {
             total.text(String(swiper.slides.length).padStart(2, '0'));
           }
         },
         slideChange: (swiper) => {
           let current = $(swiper.wrapperEl).closest('.container').find(`[data-slides="current"]`);
-          if (current.lenght) {
+          if (current.length) {
             current.text(String(swiper.activeIndex + 1).padStart(2, '0'));
           }
         },
@@ -98,12 +99,14 @@ function adjustTextSize() {
 
 // ___________ Events
 // Events
-window.addEventListener('DOMContentLoaded', (event) => {
+
+$(document).ready(function () {
   adjustTextSize();
   gridFade();
-
-  window.addEventListener('resize', () => {
-    adjustTextSize();
-  });
 });
+
+window.addEventListener('resize', () => {
+  adjustTextSize();
+});
+
 // #endregion
