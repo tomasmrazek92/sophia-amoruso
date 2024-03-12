@@ -1,17 +1,32 @@
 import { initSwipers } from './utils/globalFunctions';
 
 // #region Menu
+// BG Change
 
+// Responsive
 let scrollPosition;
+let menuOpen;
+let menuTimeout;
 const disableScroll = () => {
-  if (!menuOpenAnim) {
-    scrollPosition = $(window).scrollTop();
-    $('html, body').scrollTop(0).addClass('overflow-hidden');
+  clearTimeout(menuTimeout);
+  if (!menuOpen) {
+    menuTimeout = setTimeout(() => {
+      scrollPosition = $(window).scrollTop();
+      $('html, body').scrollTop(0).addClass('overflow-hidden');
+      $('.navbar_brand').css('color', 'white');
+    }, 350);
   } else {
     $('html, body').scrollTop(scrollPosition).removeClass('overflow-hidden');
+    $('.navbar_brand').css('color', 'inherit');
   }
-  menuOpenAnim = !menuOpenAnim;
+  menuOpen = !menuOpen;
 };
+
+$('.nav_menu-icon').on('click', function () {
+  if ($(window).width() <= 797) {
+    disableScroll();
+  }
+});
 
 // #endregion
 
@@ -29,7 +44,6 @@ const swiperInstances = [
       on: {
         init: (swiper) => {
           let total = $(swiper.wrapperEl).closest('.container').find(`[data-slides="total"]`);
-          console.log(total.le);
           if (total.length) {
             total.text(String(swiper.slides.length).padStart(2, '0'));
           }
@@ -86,6 +100,7 @@ function adjustTextSize() {
   const dynamicTexts = document.querySelectorAll("[dynamic-text='text']");
 
   dynamicContainers.forEach((dynamicContainer, index) => {
+    console.log('Fire');
     const containerWidth = dynamicContainer.offsetWidth;
     const dynamicTextWidth = dynamicTexts[index].offsetWidth;
 
@@ -99,7 +114,6 @@ function adjustTextSize() {
 
 // ___________ Events
 // Events
-
 $(document).ready(function () {
   adjustTextSize();
   gridFade();
