@@ -7,7 +7,8 @@ function pageWipe(e) {
   if (
     $(this).prop('hostname') === window.location.host &&
     $(this).attr('href').indexOf('#') === -1 &&
-    $(this).attr('target') !== '_blank'
+    $(this).attr('target') !== '_blank' &&
+    !$(this).attr('href').startsWith('?')
   ) {
     e.preventDefault();
     let destination = $(this).attr('href');

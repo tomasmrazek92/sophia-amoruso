@@ -28,7 +28,7 @@ export const createResponsiveSwiper = (
     addUniqueClassesToElements(this, swiperSelector, uniqueKey, [
       '.slider-arrow',
       '.swiper-navigation',
-      '.swiper-drag-wrapper'
+      '.swiper-drag-wrapper',
     ]);
 
     // Step 5: Merge default and passed swiper options
@@ -51,26 +51,26 @@ const addUniqueClassesToElements = (context, swiperSelector, uniqueKey, controlS
 };
 
 // Merge default and custom swiper options
-  const getMergedSwiperOptions = (options, uniqueKey) => {
-    return Object.assign({}, options, {
-      navigation: {
-        prevEl: `.slider-arrow.swiper-prev.${uniqueKey}`,
-        nextEl: `.slider-arrow.swiper-next.${uniqueKey}`,
-      },
-      pagination: {
-        el: `.swiper-navigation.${uniqueKey}`,
-        type: 'bullets',
-        bulletActiveClass: 'w-active',
-        bulletClass: 'w-slider-dot',
-      },
-      scrollbar: {
-        el: `.swiper-drag-wrapper.${uniqueKey}`,
-        draggable: true,
-        dragClass: "swiper-drag",
-        snapOnRelease: true,
-      },
-    });
-  };
+const getMergedSwiperOptions = (options, uniqueKey) => {
+  return Object.assign({}, options, {
+    navigation: {
+      prevEl: `.slider-arrow.swiper-prev.${uniqueKey}`,
+      nextEl: `.slider-arrow.swiper-next.${uniqueKey}`,
+    },
+    pagination: {
+      el: `.swiper-navigation.${uniqueKey}`,
+      type: 'bullets',
+      bulletActiveClass: 'w-active',
+      bulletClass: 'w-slider-dot',
+    },
+    scrollbar: {
+      el: `.swiper-drag-wrapper.${uniqueKey}`,
+      draggable: true,
+      dragClass: 'swiper-drag',
+      snapOnRelease: true,
+    },
+  });
+};
 
 // This function manages Swiper instances: initializing or destroying them based on certain conditions
 const manageSwiperInstance = (

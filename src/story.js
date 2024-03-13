@@ -10,7 +10,6 @@ function heroParallax() {
       start: 'top top',
       end: 'bottom top',
       scrub: 0.75,
-      markers: true,
     },
   });
   heroParallax.fromTo(
@@ -34,7 +33,6 @@ function revealYears() {
       scrollTrigger: {
         trigger: $(this),
         start: 'center bottom',
-        markers: true,
       },
     });
 
