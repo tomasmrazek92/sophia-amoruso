@@ -13,6 +13,7 @@ const ENTRY_POINTS = [
   'src/pageload.js',
   'src/story.js',
   'src/podcast.js',
+  'src/press.js',
 ];
 
 // Config dev serving

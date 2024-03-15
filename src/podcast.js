@@ -60,8 +60,6 @@ function notesParallax() {
     {
       rotation: 0,
     },
-    {
-      rotation: 7,
-    }
+    { rotation: 7 }
   );
 }
