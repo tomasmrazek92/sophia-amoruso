@@ -14,12 +14,12 @@ function cardParallax() {
   heroParallax.fromTo(
     '.podcast_hero-art',
     {
-      yPercent: 30,
-      rotation: 15,
+      yPercent: -10,
+      rotation: 10,
     },
     {
-      yPercent: -50,
-      rotation: -5,
+      yPercent: 50,
+      rotation: -10,
     }
   );
 }
@@ -36,12 +36,12 @@ function hostedParallax() {
   tl.fromTo(
     '.podcast_hosted-img-box',
     {
-      yPercent: 5,
+      yPercent: 20,
       rotation: 15,
     },
     {
-      yPercent: -5,
-      rotation: 4,
+      yPercent: -20,
+      rotation: 5,
     }
   );
 }

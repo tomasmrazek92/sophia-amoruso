@@ -5,10 +5,7 @@
   "homepage": "https://github.com/finsweet/developer-starter#readme",
   "license": "ISC",
   "keywords": [],
-  "author": {
-    "name": "Finsweet",
-    "url": "https://finsweet.com/"
-  },
+  "author": "Finsweet (https://finsweet.com/)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tomasmrazek92/starter.git"
@@ -60,5 +57,11 @@
     "luxon": "^3.3.0",
     "run": "^1.4.0",
     "swiper": "^9.1.1"
+  },
+  "bin": {
+    "starter": "bin/build.js"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

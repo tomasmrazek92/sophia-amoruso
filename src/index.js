@@ -67,6 +67,37 @@ initSwipers(swiperInstances);
 
 // #region Animations
 
+// #region Image Parallax
+// Outer = [image-parallax='outer'
+// Inner = [image-parallax='inner']
+function imageParallax() {
+  $("[image-parallax='outer']").each(function (index) {
+    let parallaxOuter = $(this);
+    let parallaxInner = $("[image-parallax='inner']");
+
+    let imageParallax = gsap.timeline({
+      scrollTrigger: {
+        trigger: parallaxOuter,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.75,
+      },
+    });
+    imageParallax.fromTo(
+      $(this).find(parallaxInner),
+      {
+        yPercent: 0,
+      },
+      {
+        yPercent: -20,
+        ease: 'none',
+      }
+    );
+  });
+}
+
+// #endregion
+
 // ____________ Stagger Fade Items within Grid
 // Trigger = [stagger-fade='trigger']
 // Item = [stagger-fade='item']
@@ -86,7 +117,8 @@ function gridFade() {
     gridFade.from($(this).find(targetElement), {
       y: '2rem',
       opacity: 0,
-      duration: 0.3,
+      duration: 0.5,
+      ease: 'power1.out',
       stagger: { amount: 0.5 },
     });
   });
@@ -112,19 +144,71 @@ function adjustTextSize() {
   });
 }
 
+// ____________ Footer Wipe
+function footerSlide() {
+  $("[footer-slide='main']").each(function (index) {
+    let footerMain = $(this);
+    let footerBase = $("[footer-slide='base']");
+
+    let footerSlide = gsap.timeline({
+      scrollTrigger: {
+        trigger: footerMain,
+        start: 'top bottom',
+        end: 'bottom, top',
+        scrub: true,
+      },
+    });
+    footerSlide.from($(this).find(footerBase), {
+      yPercent: '-100',
+    });
+  });
+}
+
+// __________ Footer BC Link ___________
+function footerBiz() {
+  let footerBizTrigger = $('.footer_base');
+
+  footerBizTrigger.each(function () {
+    let tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $(this),
+        start: 'bottom bottom',
+        end: 'bottom, 80%',
+        toggleActions: 'none play none reverse',
+      },
+    });
+
+    tl.from($(this).find('.shooting_star'), {
+      width: '1rem',
+      opacity: 0,
+      ease: Power3.easeOut,
+      duration: 0.75,
+    });
+    tl.from(
+      $(this).find("[footer-bc-stagger='item']"),
+      {
+        opacity: 0,
+        y: '2rem',
+        stagger: { amount: 0.4 },
+        delay: 0.2,
+        duration: 0.6,
+        ease: 'power3.out',
+      },
+      '<'
+    );
+  });
+}
+
 // ___________ Events
 // Events
 $(document).ready(function () {
   adjustTextSize();
   gridFade();
+  imageParallax();
+  footerSlide();
+  footerBiz();
 });
 
 window.addEventListener('resize', () => {
   adjustTextSize();
 });
-
-// #endregion
-
-gdgdgdgdgdgd;
-gdgdgd;
-// #endregion

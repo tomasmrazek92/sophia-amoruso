@@ -58,21 +58,19 @@ function heroScroll() {
       trigger: '.home_hero',
       start: 'top top',
       end: 'bottom top',
-      scrub: 0.75,
+      scrub: 0.25,
     },
   });
   heroScroll.to(
     '.home_hero-inner',
     {
-      y: '25vh',
+      y: '10rem',
     },
     '<'
   );
   heroScroll.to(
-    '.home_hero-slider',
+    '.home_hero-swiper-sticky',
     {
-      y: '60svh',
-      /*x: "20svw",*/
       rotation: -8,
       scale: 0.6,
       /*width: "60svw",
