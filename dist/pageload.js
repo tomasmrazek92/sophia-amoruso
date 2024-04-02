@@ -18,8 +18,8 @@
         { x: "-100vw" },
         {
           x: "0vw",
-          duration: 1.5,
-          ease: "power3.inOut"
+          duration: 1,
+          ease: "power2.inOut"
         }
       );
       gsap.fromTo(
@@ -27,9 +27,9 @@
         { x: "-100vw" },
         {
           x: "0vw",
-          duration: 1.25,
-          ease: "power3.inOut",
-          delay: 0.25
+          duration: 0.8,
+          ease: "power2.inOut",
+          delay: 0.2
         },
         "<"
       );
@@ -38,9 +38,9 @@
         { x: "-100vw" },
         {
           x: "0vw",
-          duration: 1,
-          ease: "power3.inOut",
-          delay: 0.25,
+          duration: 0.6,
+          ease: "power2.inOut",
+          delay: 0.2,
           onComplete: () => {
             window.location = destination;
           }
@@ -55,8 +55,8 @@
       { x: "0vw" },
       {
         x: "100vw",
-        duration: 1.5,
-        ease: "power3.inOut",
+        duration: 1,
+        ease: "power2.inOut",
         onComplete: () => {
           gsap.set(".page_wipe-wrapper", { display: "none" });
         }
@@ -67,9 +67,9 @@
       { x: "0vw" },
       {
         x: "100vw",
-        duration: 1.25,
-        ease: "power3.inOut",
-        delay: 0.25
+        duration: 0.8,
+        ease: "power2.inOut",
+        delay: 0.2
       },
       "<"
     );
@@ -78,9 +78,9 @@
       { x: "0vw" },
       {
         x: "100vw",
-        duration: 1,
-        ease: "power3.inOut",
-        delay: 0.25
+        duration: 0.6,
+        ease: "power2.inOut",
+        delay: 0.2
       },
       "<"
     );
