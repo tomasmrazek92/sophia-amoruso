@@ -227,7 +227,6 @@ const stars = () => {
       scrollTrigger: {
         trigger: $(this),
         start: 'bottom bottom',
-        markers: true,
       },
     });
 
