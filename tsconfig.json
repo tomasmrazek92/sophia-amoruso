@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "strict": true,
     "useUnknownInCatchVariables": false,
+    "ignoreDeprecations": "5.0",
     "rootDir": ".",
     "checkJs": false,
     "baseUrl": "./",

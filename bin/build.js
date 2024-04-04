@@ -14,6 +14,7 @@ const ENTRY_POINTS = [
   'src/story.js',
   'src/podcast.js',
   'src/press.js',
+  'src/business-class.js',
 ];
 
 // Config dev serving
