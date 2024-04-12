@@ -2,6 +2,81 @@ import { initSwipers } from './utils/globalFunctions';
 import { gridFade, imageReveal } from './utils/reusableAnimations';
 
 $(document).ready(() => {
+  // #region Navbar
+  // ___Opening flow
+  let navHam = $('.nav_menu-inner');
+  let navMenu = $('.nav_menu-list');
+  let navItem = $('.nav_menu-link');
+  let navOpen = false;
+
+  function toggleNav() {
+    navOpen = !navOpen; // Toggle the navOpen flag
+
+    if (navOpen) {
+      openNav();
+    } else {
+      closeNav();
+    }
+  }
+
+  function openNav() {
+    gsap.fromTo(
+      navMenu,
+      { xPercent: -5, opacity: 0, display: 'none' },
+      { xPercent: 0, opacity: 1, display: 'flex' }
+    );
+    animateHam(true);
+  }
+
+  function closeNav() {
+    gsap.to(navMenu, { xPercent: -5, opacity: 0, display: 'none' });
+    animateHam(false);
+  }
+
+  function animateHam(open) {
+    let line1 = navHam.find('.nav_menu-line._1');
+    let line2 = navHam.find('.nav_menu-line._2');
+    let line3 = navHam.find('.nav_menu-line._3');
+    let rotation = open ? 45 : 0;
+    let yTranslation = open ? '6px' : '0px';
+    let opacity = open ? 0 : 1;
+
+    let tl = gsap.timeline({ defaults: { ease: Power2.easeInOut } });
+
+    tl.to(line1, { y: yTranslation }, '<');
+    tl.to(line2, { opacity: opacity }, '<');
+    tl.to(line3, { y: '-' + yTranslation }, '<');
+    tl.to(line1, { rotate: rotation }, '<');
+    tl.to(line3, { rotate: '-' + rotation }, '<');
+  }
+
+  // Init
+  navHam.on('click', toggleNav);
+  navItem.on('click', toggleNav);
+
+  // ___ Logo Scrolling Flow
+  let darkSections = $('[data-section="logo-white"]');
+  let navBrand = $('.nav_brand-embed');
+
+  const getNavHeight = () => {
+    return $('.navbar').outerHeight();
+  };
+
+  darkSections.each(function () {
+    let tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: $(this),
+        start: 'top ' + getNavHeight() / 2 + 'px',
+        end: 'bottom ' + getNavHeight() / 2 + 'px',
+        toggleActions: 'play reverse play reverse',
+      },
+    });
+
+    tl.to(navBrand, { color: 'white' });
+  });
+
+  // #endregion
+
   // #region Players
 
   // Vimeo Video Player
