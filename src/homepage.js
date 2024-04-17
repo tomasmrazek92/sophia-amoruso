@@ -2,6 +2,7 @@ $(document).ready(heroScroll);
 $(document).ready(bookParallax);
 $(document).ready(posterParallax);
 $(document).ready(homeNavChange);
+$(document).ready(heroTime);
 
 // ________ Home Nav Transparent _____________________________
 function homeNavChange() {
@@ -78,6 +79,24 @@ function heroScroll() {
     },
     '<'
   );
+}
+
+// _______ Hero Time
+function heroTime() {
+  // Time
+  var { DateTime } = luxon;
+
+  function updateTime() {
+    var userLocalTime = DateTime.local();
+    var estTime = userLocalTime.setZone('America/New_York').toFormat('HH:mm');
+    $('[data-real-time]').text(estTime);
+  }
+
+  // Load
+  updateTime();
+
+  // Real Time
+  setInterval(updateTime, 1000);
 }
 
 // __________ Book sliding up on homepage _____________
