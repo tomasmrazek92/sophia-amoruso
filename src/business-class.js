@@ -116,7 +116,7 @@ $(document).ready(() => {
 
     // create plyr settings
     let player = new Plyr(thisComponent.find('.plyr_video')[0], {
-      controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen'],
+      controls: ['play'],
       resetOnEnd: true,
     });
 
@@ -298,7 +298,7 @@ $(document).ready(() => {
   // #endregion
 
   // #region Animations
-  const stars = () => {
+  const reviewStars = () => {
     $('.stars_row').each(function () {
       let tl = gsap.timeline({
         scrollTrigger: {
@@ -315,10 +315,71 @@ $(document).ready(() => {
     });
   };
 
-  stars();
+  const expertHover = () => {
+    var gradientBox = $('.experts_item');
+
+    const startGradient = 'linear-gradient(rgba(29, 29, 31, 0), rgba(29, 29, 31, .6))';
+    const endGradient = 'linear-gradient(rgba(29, 29, 31, 0), rgba(29, 29, 31, 0.9))';
+    const duration = 0.5;
+
+    // Set base gradient
+    gsap.set($('.experts_inner'), {
+      background: startGradient,
+    });
+
+    // Hover in animation
+    gradientBox.mouseenter(function () {
+      gsap.to($(this).find('.experts_inner'), {
+        duration: duration,
+        ease: 'none',
+        background: endGradient,
+      });
+    });
+
+    // Hover out animation
+    gradientBox.mouseleave(function () {
+      gsap.to($(this).find('.experts_inner'), {
+        duration: duration,
+        ease: 'none',
+        background: startGradient,
+      });
+    });
+  };
+
+  // Init
+  reviewStars();
+  expertHover();
+
+  // #endregion
+
+  // #region Functions
+
+  function openFirstCurriculum() {
+    let firstItem = $('.curr_list-wrap').find('.faqs_item').eq(0);
+
+    firstItem.find('.faqs_item-head').trigger('click');
+  }
   // #endregion
 
   // Init
-  imageReveal();
+  // imageReveal();
   gridFade();
+  openFirstCurriculum();
+
+  function shootingStars() {
+    let stars = $('.star_icon');
+
+    stars.each(function () {
+      let tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: $(this),
+          start: 'bottom bottom',
+        },
+      });
+
+      tl.from($(this).find('.star_line'), {
+        width: '1rem',
+      });
+    });
+  }
 });

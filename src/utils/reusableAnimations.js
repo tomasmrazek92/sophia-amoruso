@@ -35,6 +35,7 @@ export function imageReveal() {
 // ____________ Stagger Fade Items within Grid
 // Trigger = [stagger-fade='trigger']
 // Item = [stagger-fade='item']
+// Star =  [stagger-fade='star']
 export function gridFade() {
   $("[stagger-fade='trigger']").each(function (index) {
     let triggerElement = $(this);
@@ -55,5 +56,30 @@ export function gridFade() {
       ease: 'power1.out',
       stagger: { amount: 0.5 },
     });
+
+    // Stars
+    let star = triggerElement.find("[stagger-fade='star']");
+    let starLine = star.find('.star_line');
+    let starVertical = starLine.hasClass('top');
+
+    if (star.length) {
+      gridFade.from(
+        star,
+        {
+          opacity: 0,
+          ...(starVertical ? { y: '-4rem' } : { x: '-4rem' }),
+        },
+        '<'
+      );
+
+      // Vertical or Horizontal Line
+      gridFade.from(
+        star.find('.star_line'),
+        {
+          ...(starVertical ? { height: '1rem' } : { width: '1rem' }),
+        },
+        '<0.1'
+      );
+    }
   });
 }
