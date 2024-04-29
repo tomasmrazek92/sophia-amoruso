@@ -2,6 +2,9 @@ import { initSwipers } from './utils/globalFunctions';
 import { gridFade, imageReveal } from './utils/reusableAnimations';
 
 $(document).ready(() => {
+  // Reveal site when GSAP Ready
+  gsap.to('.page-wrapper', { opacity: 1, duration: 0.1 });
+
   // #region Navbar
   // ___Opening flow
   let navHam = $('.nav_menu-inner');
@@ -74,6 +77,38 @@ $(document).ready(() => {
 
     tl.to(navBrand, { color: 'white' });
   });
+
+  // #endregion
+
+  // #region heroLoad
+
+  function revealHero() {
+    let heroObjects = {
+      heroVisual: $('.hp-hero_visual'),
+      heroHeading: $('.hp-hero_content h1'),
+      heroParagraph: $('.hp-hero_par'),
+      heroBtn: $('.hp-hero_content .button'),
+      heroStars: $('.star-members'),
+      logos: $('.seen_wrap'),
+      navBar: $('.navbar'),
+    };
+
+    let heroLoad = gsap.timeline({});
+
+    // Extract all elements into an array
+    let heroArr = Object.values(heroObjects);
+
+    heroLoad.from(heroArr, {
+      y: '2rem',
+      opacity: 0,
+      delay: 1,
+      duration: 0.5,
+      ease: 'power1.out',
+      stagger: { amount: 0.5 },
+    });
+  }
+
+  revealHero();
 
   // #endregion
 
