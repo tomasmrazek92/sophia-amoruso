@@ -41,6 +41,7 @@ const swiperInstances = [
     'press-slider',
     {
       slidesPerView: 'auto',
+      spaceBetween: 0,
       preventClicks: 'false',
       on: {
         init: (swiper) => {
@@ -66,6 +67,39 @@ initSwipers(swiperInstances);
 
 // #endregion
 
+// #region forms
+$(document).ready(function () {
+  $('[data-form="custom"]').each(function () {
+    var form = $(this).find('form');
+    var success = $(this).find('.w-form-done');
+    var error = $(this).find('.w-form-fail');
+
+    var actionUrl = $(this).attr('data-form-action'); // Get the action URL from custom attribute
+
+    form.on('submit', function (e) {
+      e.preventDefault(); // Prevent the default form submission
+
+      console.log(actionUrl);
+      var formData = form.serialize(); // Serialize the form data
+      console.log(formData);
+
+      $.ajax({
+        url: actionUrl,
+        type: 'POST', // Ensure the correct HTTP method is set
+        data: formData,
+        success: function (response) {
+          form.hide();
+          success.show();
+        },
+        error: function (response) {
+          console.log(response);
+          error.show();
+        },
+      });
+    });
+  });
+});
+// #endregion
 // #region Animations
 
 // #region Image Parallax

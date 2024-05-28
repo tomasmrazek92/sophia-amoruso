@@ -49,13 +49,15 @@ export function gridFade() {
         toggleActions: 'none play none reset',
       },
     });
-    gridFade.from($(this).find(targetElement), {
-      y: '2rem',
-      opacity: 0,
-      duration: 0.5,
-      ease: 'power1.out',
-      stagger: { amount: 0.5 },
-    });
+    if ($(this).find(targetElement).length) {
+      gridFade.from($(this).find(targetElement), {
+        y: '2rem',
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power1.out',
+        stagger: { amount: 0.5 },
+      });
+    }
 
     // Stars
     let star = triggerElement.find("[stagger-fade='star']");
@@ -76,7 +78,7 @@ export function gridFade() {
       gridFade.from(
         star.find('.star_line'),
         {
-          ...(starVertical ? { height: '1rem' } : { width: '1rem' }),
+          ...(starVertical ? { scaleY: 0, xPercent: 50 } : { scaleX: 0, yPercent: 50 }),
         },
         '<0.1'
       );
