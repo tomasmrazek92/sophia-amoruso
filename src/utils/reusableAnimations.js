@@ -11,6 +11,7 @@ export function imageReveal() {
         start: 'top bottom',
         end: 'top, 60%',
         toggleActions: 'none play none reset',
+        markers: true,
       },
     });
 
@@ -39,7 +40,7 @@ export function imageReveal() {
 export function gridFade() {
   $("[stagger-fade='trigger']").each(function (index) {
     let triggerElement = $(this);
-    let targetElement = $("[stagger-fade='item']");
+    let targetElement = $(this).find("[stagger-fade='item']");
 
     let gridFade = gsap.timeline({
       scrollTrigger: {
@@ -47,16 +48,24 @@ export function gridFade() {
         start: 'top bottom',
         end: 'top, 50%',
         toggleActions: 'none play none reset',
+        markers: true,
       },
     });
-    if ($(this).find(targetElement).length) {
-      gridFade.from($(this).find(targetElement), {
-        y: '2rem',
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power1.out',
-        stagger: { amount: 0.5 },
-      });
+
+    if (targetElement.length) {
+      gridFade.fromTo(
+        targetElement,
+        {
+          y: '2rem',
+          opacity: 0,
+        },
+        {
+          y: '0rem',
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power1.out',
+        }
+      );
     }
 
     // Stars
