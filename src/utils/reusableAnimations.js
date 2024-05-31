@@ -11,7 +11,6 @@ export function imageReveal() {
         start: 'top bottom',
         end: 'top, 60%',
         toggleActions: 'none play none reset',
-        markers: true,
       },
     });
 
@@ -48,7 +47,6 @@ export function gridFade() {
         start: 'top bottom',
         end: 'top, 50%',
         toggleActions: 'none play none reset',
-        markers: true,
       },
     });
 
@@ -64,6 +62,7 @@ export function gridFade() {
           opacity: 1,
           duration: 0.5,
           ease: 'power1.out',
+          stagger: { amount: 0.5 },
         }
       );
     }
