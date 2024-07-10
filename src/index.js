@@ -165,7 +165,6 @@ function footerSlide() {
         start: 'bottom bottom',
         end: () => `+=${document.querySelector('.footer_base').offsetHeight}`,
         scrub: true,
-        markers: true,
       },
     });
     footerSlide.fromTo(

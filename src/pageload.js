@@ -18,7 +18,7 @@ function pageWipe(e) {
       { x: '-100vw' },
       {
         x: '0vw',
-        duration: 1,
+        duration: 0.7,
         ease: 'power2.inOut',
       }
     );
@@ -27,9 +27,9 @@ function pageWipe(e) {
       { x: '-100vw' },
       {
         x: '0vw',
-        duration: 0.8,
+        duration: 0.6,
         ease: 'power2.inOut',
-        delay: 0.2,
+        delay: 0.3,
       },
       '<'
     );
@@ -40,7 +40,7 @@ function pageWipe(e) {
         x: '0vw',
         duration: 0.6,
         ease: 'power2.inOut',
-        delay: 0.2,
+        delay: 0.3,
         onComplete: () => {
           window.location = destination;
         },
@@ -66,7 +66,7 @@ function loadPageWipe() {
     { x: '0vw' },
     {
       x: '100vw',
-      duration: 1,
+      duration: 0.8,
       ease: 'power2.inOut',
       onComplete: () => {
         gsap.set('.page_wipe-wrapper', { display: 'none' });
@@ -78,9 +78,9 @@ function loadPageWipe() {
     { x: '0vw' },
     {
       x: '100vw',
-      duration: 0.8,
+      duration: 0.6,
       ease: 'power2.inOut',
-      delay: 0.2,
+      delay: 0.1,
     },
     '<'
   );
@@ -91,7 +91,7 @@ function loadPageWipe() {
       x: '100vw',
       duration: 0.6,
       ease: 'power2.inOut',
-      delay: 0.2,
+      delay: 0.1,
     },
     '<'
   );
